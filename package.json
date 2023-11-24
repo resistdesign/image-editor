@@ -26,11 +26,13 @@
   "dependencies": {
     "@picocss/pico": "^2.0.0-alpha1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
+    "@types/styled-components": "^5.1.32",
     "parcel": "^2.10.2",
     "prettier": "^3.0.3",
     "process": "^0.11.10",
