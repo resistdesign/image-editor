@@ -1,0 +1,43 @@
+{
+  "name": "frontend-project-ryanne",
+  "version": "0.0.0",
+  "repository": "git@github.com:lmstudio-ai/frontend-project-ryanne.git",
+  "author": "Ryanne Graff <ryantgraff@resistdesign.com>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "parcel ./src/index.html"
+  },
+  "targets": {
+    "app": {
+      "context": "browser",
+      "engines": {
+        "browsers": [
+          "last 2 version",
+          "not dead",
+          "> 0.2%"
+        ]
+      },
+      "includeNodeModules": true,
+      "outputFormat": "commonjs",
+      "isLibrary": false,
+      "scopeHoist": false
+    }
+  },
+  "dependencies": {
+    "@picocss/pico": "^2.0.0-alpha1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "styled-components": "^6.1.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.15",
+    "@types/styled-components": "^5.1.32",
+    "@types/uuid": "^9.0.7",
+    "parcel": "^2.10.2",
+    "prettier": "^3.0.3",
+    "process": "^0.11.10",
+    "typescript": "^5.2.2"
+  }
+}
