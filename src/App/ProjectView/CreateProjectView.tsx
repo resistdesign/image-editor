@@ -5,14 +5,15 @@ import {
   useCallback,
   useState,
 } from "react";
-import { Project } from "../../../Types/Project";
+import { Project } from "../../Types/Project";
 import styled from "styled-components";
 
 const Layout = styled.form`
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: flex-start;
+  justify-content: center;
+  gap: 1em;
 `;
 const Controls = styled.div`
   flex: 1 0 auto;
@@ -71,6 +72,7 @@ export const CreateProjectView: FC<CreateProjectViewProps> = ({
             value={newProjectLabel}
             onChange={onNewProjectLabelChange}
             placeholder="New Project Label"
+            autoFocus
           />
           <Controls>
             <ControlButton type="button" onClick={toggleCreatingNewProject}>
@@ -80,9 +82,7 @@ export const CreateProjectView: FC<CreateProjectViewProps> = ({
           </Controls>
         </>
       ) : (
-        <ControlButton onClick={toggleCreatingNewProject}>
-          New Project
-        </ControlButton>
+        <button onClick={toggleCreatingNewProject}>New Project</button>
       )}
     </Layout>
   );

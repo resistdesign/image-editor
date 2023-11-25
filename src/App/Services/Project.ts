@@ -1,4 +1,5 @@
 import { Project } from "../../Types/Project";
+import { v4 as UUIDV4 } from "uuid";
 
 export class ProjectService {
   private db: IDBDatabase | null = null;
@@ -29,10 +30,6 @@ export class ProjectService {
     });
   }
 
-  async createProject(project: Project): Promise<string> {
-    return this.saveProject(project);
-  }
-
   async saveProject(project: Project): Promise<string> {
     return new Promise((resolve, reject) => {
       if (!this.db) {
@@ -54,7 +51,14 @@ export class ProjectService {
     });
   }
 
-  async getProject(id: string): Promise<Project | undefined> {
+  async createProject(project: Project): Promise<string> {
+    return this.saveProject({
+      ...project,
+      id: UUIDV4(),
+    });
+  }
+
+  async readProject(id: string): Promise<Project | undefined> {
     return new Promise((resolve, reject) => {
       if (!this.db) {
         reject("DB not initialized");

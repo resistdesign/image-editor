@@ -2,7 +2,6 @@ import { ProjectItem } from "./ProjectList/ProjectItem";
 import { Project } from "../../Types/Project";
 import { FC } from "react";
 import styled from "styled-components";
-import { CreateProjectView } from "./ProjectList/CreateProjectView";
 
 const Layout = styled.div`
   flex: 1 0 auto;
@@ -16,21 +15,42 @@ const Layout = styled.div`
 
 export type ProjectListProps = {
   projects?: Project[];
-  createProject?: (project: Project) => void;
+  readProject?: (project: Project) => void;
+  selectedIdMap?: Record<string, boolean>;
+  onSelectedIdMapChange?: (selectedIdMap: Record<string, boolean>) => void;
 };
 
 export const ProjectList: FC<ProjectListProps> = ({
   projects = [],
-  createProject,
+  readProject,
+  selectedIdMap = {},
+  onSelectedIdMapChange,
 }) => {
+  const onSelectedChange = (id: string, selected: boolean) => {
+    if (onSelectedIdMapChange) {
+      const newSelectedIdMap = {
+        ...selectedIdMap,
+        [id]: selected,
+      };
+
+      onSelectedIdMapChange(newSelectedIdMap);
+    }
+  };
+
   return (
     <Layout>
-      <CreateProjectView createProject={createProject} />
       {projects.map((project, index) => {
         const { id } = project;
+        const { [id as string]: selected = false } = selectedIdMap;
 
         return (
-          <ProjectItem key={`ProjectItem:${id}:${index}`} project={project} />
+          <ProjectItem
+            key={`ProjectItem:${id}:${index}`}
+            selected={selected}
+            onSelectedChange={onSelectedChange}
+            project={project}
+            readProject={readProject}
+          />
         );
       })}
     </Layout>
