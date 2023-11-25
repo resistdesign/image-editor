@@ -1,9 +1,4 @@
-import {
-  ChangeEvent as ReactChangeEvent,
-  FC,
-  useCallback,
-  useState,
-} from "react";
+import { FC } from "react";
 import styled from "styled-components";
 import { Project } from "../Types/Project";
 import { ProjectList } from "./ProjectView/ProjectList";
@@ -54,62 +49,24 @@ const Main = styled.div`
 export type ProjectViewProps = {
   projects?: Project[];
   openProject?: Project;
-  onCreateProject?: (project: Project) => void;
-  onReadProject?: (project: Project) => void;
-  onUpdateProject?: (project: Project) => void;
-  onDeleteProject?: (project: Project) => void;
+  createProject?: (project: Project) => void;
+  readProject?: (project: Project) => void;
+  updateProject?: (project: Project) => void;
+  deleteProject?: (project: Project) => void;
 };
 
 export const ProjectView: FC<ProjectViewProps> = ({
   projects = [],
   openProject,
-  onCreateProject,
+  createProject,
 }) => {
-  const [creatingNewProject, setCreatingNewProject] = useState(false);
-  const [newProjectLabel, setNewProjectLabel] = useState("");
-  const toggleCreatingNewProject = useCallback(() => {
-    setCreatingNewProject(!creatingNewProject);
-    setNewProjectLabel("");
-  }, [creatingNewProject]);
-  const onNewProjectLabelChange = useCallback(
-    (event: ReactChangeEvent<HTMLInputElement>) => {
-      setNewProjectLabel(event.target.value);
-    },
-    [],
-  );
-  const onCreateNewProject = useCallback(() => {
-    if (onCreateProject && newProjectLabel) {
-      const newProject: Project = {
-        label: newProjectLabel,
-        layers: [],
-      };
-
-      onCreateProject(newProject);
-      toggleCreatingNewProject();
-    }
-  }, [onCreateProject, newProjectLabel, toggleCreatingNewProject]);
-
   return (
     <Layout>
       <Header>
         <h2>Image Editor</h2>
       </Header>
       <Sidebar>
-        {creatingNewProject ? (
-          <div>
-            <input
-              type="text"
-              value={newProjectLabel}
-              onChange={onNewProjectLabelChange}
-              placeholder="New Project Label"
-            />
-            <button onClick={toggleCreatingNewProject}>Cancel</button>
-            <button onClick={onCreateNewProject}>Create</button>
-          </div>
-        ) : (
-          <button onClick={toggleCreatingNewProject}>New Project</button>
-        )}
-        <ProjectList projects={projects} />
+        <ProjectList projects={projects} createProject={createProject} />
       </Sidebar>
       <Main>Main</Main>
     </Layout>

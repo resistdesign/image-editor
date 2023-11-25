@@ -64,7 +64,7 @@ export const App: FC = () => {
   return (
     <>
       <GlobalStyle />
-      <ProjectView projects={projects} onCreateProject={createProject} />
+      <ProjectView projects={projects} createProject={createProject} />
     </>
   );
 };
