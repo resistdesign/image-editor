@@ -33,7 +33,7 @@ export const DeleteProjectView: FC<DeleteProjectViewProps> = ({
   const onStopDeleting = useCallback(() => {
     setDeleting(false);
   }, []);
-  const showControls = selectedIds.length > 0;
+  const enabled = selectedIds.length > 0;
   const onDeleteSelected = useCallback(() => {
     selectedIds.forEach((id) => {
       deleteProject?.(id);
@@ -44,22 +44,24 @@ export const DeleteProjectView: FC<DeleteProjectViewProps> = ({
 
   return (
     <Layout>
-      {showControls ? (
-        deleting ? (
-          <>
-            <ControlButton type="button" onClick={onStopDeleting}>
-              Cancel
-            </ControlButton>
-            <ControlButton type="button" onClick={onDeleteSelected}>
-              Confirm
-            </ControlButton>
-          </>
-        ) : (
-          <ControlButton type="button" onClick={onStartedDeleting}>
-            Delete
+      {deleting ? (
+        <>
+          <ControlButton type="button" onClick={onStopDeleting}>
+            Cancel
           </ControlButton>
-        )
-      ) : undefined}
+          <ControlButton type="button" onClick={onDeleteSelected}>
+            Confirm
+          </ControlButton>
+        </>
+      ) : (
+        <ControlButton
+          disabled={!enabled}
+          type="button"
+          onClick={onStartedDeleting}
+        >
+          Delete
+        </ControlButton>
+      )}
     </Layout>
   );
 };
