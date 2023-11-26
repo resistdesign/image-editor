@@ -39,11 +39,9 @@ const Sidebar = styled.div`
 `;
 const Main = styled.div`
   flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: flex-start;
-  gap: 1em;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
   overflow: hidden;
   grid-area: main;
 `;
@@ -62,6 +60,7 @@ export const ProjectView: FC<ProjectViewProps> = ({
   openProject,
   createProject,
   readProject,
+  updateProject,
   deleteProject,
 }) => {
   const [selectedIdMap, onSelectedIdMapChange] = useState<
@@ -87,7 +86,7 @@ export const ProjectView: FC<ProjectViewProps> = ({
         />
       </Sidebar>
       <Main>
-        <CanvasView openProject={openProject} />
+        <CanvasView openProject={openProject} updateProject={updateProject} />
       </Main>
     </Layout>
   );

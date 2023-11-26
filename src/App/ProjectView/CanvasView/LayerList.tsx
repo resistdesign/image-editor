@@ -3,13 +3,14 @@ import { Layer } from "../../../Types/Layer";
 import styled from "styled-components";
 import { LayerItem } from "./LayerList/LayerItem";
 
-const Layout = styled.ul`
+const Layout = styled.div`
   flex: 1 0 auto;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: stretch;
+  justify-content: flex-start;
   gap: 1em;
+  overflow: auto;
 `;
 
 export type LayerListProps = {
@@ -36,7 +37,6 @@ export const LayerList: FC<LayerListProps> = ({
             onSelectedLayerChange(undefined);
           }
         };
-        // TODO: Drag drop reorder.
 
         return (
           <LayerItem

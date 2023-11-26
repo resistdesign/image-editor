@@ -1,20 +1,31 @@
-import {FC, useCallback} from "react";
+import { FC, useCallback } from "react";
 import { Layer } from "../../../../Types/Layer";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Layout = styled.li`
+const Layout = styled.div`
   flex: 0 0 auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
   gap: 1em;
-  overflow: auto;
-  cursor: pointer;
 `;
-const Label = styled.div`
-  flex: 1 0 auto;
+const Label = styled.div<{ selected?: boolean }>`
+  flex: 0 0 auto;
+  display: block;
   cursor: pointer;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0.25em;
+  border-radius: 0.25em;
+
+  ${({selected}) =>
+          selected
+                  ? css`
+                    color: var(--pico-primary-inverse);
+                    background-color: var(--pico-primary-focus);
+                  `
+                  : ''}
 `;
 
 export type LayerItemProps = {
@@ -28,6 +39,7 @@ export const LayerItem: FC<LayerItemProps> = ({
   onSelectedChange,
   layer,
 }) => {
+  const { label } = layer;
   const onToggleSelected = useCallback(() => {
     if (onSelectedChange) {
       onSelectedChange(!selected);
@@ -36,9 +48,9 @@ export const LayerItem: FC<LayerItemProps> = ({
 
   return (
     <Layout>
-      <Label
-        onClick={onToggleSelected}
-      >Layer</Label>
+      <Label selected={selected} title={label} onClick={onToggleSelected}>
+        {label}
+      </Label>
     </Layout>
   );
 };

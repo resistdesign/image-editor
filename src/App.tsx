@@ -102,6 +102,7 @@ export const App: FC = () => {
         openProject={openProject}
         createProject={createProject}
         readProject={readProject}
+        updateProject={updateProject}
         deleteProject={deleteProject}
       />
     </>

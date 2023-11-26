@@ -5,11 +5,10 @@ import { Canvas } from "./CanvasView/Canvas";
 
 const Layout = styled.div`
   flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  justify-content: stretch;
-  gap: 1em;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  overflow: hidden;
 `;
 const EmptyState = styled.div`
   flex: 1 0 auto;
@@ -20,7 +19,7 @@ const EmptyState = styled.div`
 
 export type CanvasViewProps = {
   openProject?: Project;
-  updateProject: (openProject: Project) => void;
+  updateProject?: (openProject: Project) => void;
 };
 export const CanvasView: FC<CanvasViewProps> = ({
   openProject,
@@ -29,13 +28,17 @@ export const CanvasView: FC<CanvasViewProps> = ({
   const { label } = openProject || ({ label: "No Project To View" } as Project);
   const onOpenProjectChange = useCallback(
     (project: Project) => {
-      updateProject(project);
+      if (updateProject) {
+        updateProject(project);
+      }
     },
     [updateProject],
   );
 
   return (
-    <Layout>
+    <Layout
+      className="CanvasView"
+    >
       {openProject ? (
         <Canvas
           openProject={openProject}
