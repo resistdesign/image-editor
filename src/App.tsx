@@ -36,19 +36,16 @@ export const App: FC = () => {
     openProject: undefined,
   });
   const { projects, openProject } = appState;
-  const clearProjects = useCallback(() => {
-    setAppState({
-      ...appState,
-      projects: undefined,
-    });
-  }, [appState]);
   const createProject = useCallback(
     async (project: Project) => {
       await PROJECT_SERVICE.createProject(project);
 
-      clearProjects();
+      setAppState({
+        ...appState,
+        projects: [...(projects || []), project],
+      });
     },
-    [clearProjects],
+    [appState],
   );
   const readProject = useCallback(
     async (project: Project) => {
@@ -66,17 +63,33 @@ export const App: FC = () => {
     async (project: Project) => {
       await PROJECT_SERVICE.updateProject(project);
 
-      clearProjects();
+      setAppState({
+        ...appState,
+        projects: (projects || []).map((storedProject) => {
+          if (storedProject.id === project.id) {
+            return project;
+          }
+
+          return storedProject;
+        }),
+        openProject: project.id === openProject?.id ? project : openProject,
+      });
     },
-    [clearProjects],
+    [appState],
   );
   const deleteProject = useCallback(
     async (id: string) => {
       await PROJECT_SERVICE.deleteProject(id);
 
-      clearProjects();
+      setAppState({
+        ...appState,
+        projects: (projects || []).filter(
+          ({ id: existingId }) => existingId !== id,
+        ),
+        openProject: id === openProject?.id ? undefined : openProject,
+      });
     },
-    [clearProjects],
+    [appState],
   );
   const listProjects = useCallback(async () => {
     await PROJECT_SERVICE.initDB();
@@ -85,6 +98,9 @@ export const App: FC = () => {
     setAppState({
       ...appState,
       projects: storedProjects,
+      openProject: openProject
+        ? storedProjects.find(({ id }) => id === openProject.id)
+        : undefined,
     });
   }, [appState]);
 

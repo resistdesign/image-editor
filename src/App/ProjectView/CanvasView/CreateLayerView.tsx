@@ -1,7 +1,7 @@
 import { FC, useCallback } from "react";
 import { Layer } from "../../../Types/Layer";
 import styled from "styled-components";
-import { loadImage } from "./Utils/File";
+import { blobToBase64, loadImage } from "./Utils/File";
 
 const Layout = styled.form`
   flex: 0 0 auto;
@@ -38,10 +38,15 @@ export const CreateLayerView: FC<CreateLayerViewProps> = ({ createLayer }) => {
           name: imageName,
           type: imageType,
           data: imageData,
+          dimensions: { width: imageWidth, height: imageHeight },
         } = await loadImage();
         const newLayer: Layer = {
           label: `${imageName} (${imageType})`,
-          data: imageData,
+          data: await blobToBase64(imageData),
+          y: 0,
+          x: 0,
+          width: imageWidth,
+          height: imageHeight,
         };
 
         createLayer(newLayer);

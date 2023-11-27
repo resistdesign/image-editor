@@ -6,9 +6,9 @@ import { LayerItem } from "./LayerList/LayerItem";
 const Layout = styled.div`
   flex: 1 0 auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: column-reverse;
   align-items: stretch;
-  justify-content: flex-start;
+  justify-content: flex-end;
   gap: 1em;
   overflow: auto;
 `;
@@ -17,14 +17,12 @@ export type LayerListProps = {
   selectedLayer?: Layer;
   onSelectedLayerChange: (layer?: Layer) => void;
   layers: Layer[];
-  onLayersChange: (layers: Layer[]) => void;
 };
 
 export const LayerList: FC<LayerListProps> = ({
   selectedLayer,
   onSelectedLayerChange,
   layers = [],
-  onLayersChange,
 }) => {
   return (
     <Layout>
