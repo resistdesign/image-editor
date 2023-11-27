@@ -1,6 +1,7 @@
 import { CanvasTool } from "./Types";
 import { drawLayers, getProjectLayerByIndex } from "./Utils";
 import { Layer } from "../../../../Types/Layer";
+import { setupCanvas } from "./Tools/PaintingUtils";
 
 export type BasicToolIds = "MOVE_RESIZE" | "CROP" | "RAINBOW_PAINT";
 
@@ -171,6 +172,35 @@ export const BasicTools: BasicCanvasTool[] = [
     id: "RAINBOW_PAINT",
     label: "Rainbow Paint",
     icon: "&#x1F308;",
+    initializeCanvas: (canvas, canvasState, onCanvasStateChange) => {
+      return setupCanvas(canvas, (dataUrl) => {
+        const { openProject, selectedLayerIndex } = canvasState;
+
+        if (canvas && openProject && selectedLayerIndex) {
+          const { layers = ([] = []) } = openProject;
+          const newLayer: Layer = {
+            x: 0,
+            y: 0,
+            width: canvas.width,
+            height: canvas.height,
+            label: "Rainbow Paint",
+            data: dataUrl,
+            crop: undefined,
+          };
+          const newLayerList = [...layers, newLayer];
+          const newCanvasState = {
+            ...canvasState,
+            selectedLayerIndex: newLayerList.length - 1,
+            openProject: {
+              ...openProject,
+              layers: newLayerList,
+            },
+          };
+
+          onCanvasStateChange(newCanvasState);
+        }
+      });
+    },
     onCanvasStateChange: () => {},
   },
 ];

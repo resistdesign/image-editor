@@ -102,7 +102,7 @@ export const Canvas: FC<CanvasProps> = ({
       openProject,
       selectedLayerIndex,
     }),
-    [selectedTool, selectedLayerIndex, openProject],
+    [canvasRef.current, selectedLayerIndex, openProject],
   );
   const overlayCoordinates = useMemo(() => {
     if (selectedTool) {
@@ -179,8 +179,37 @@ export const Canvas: FC<CanvasProps> = ({
     },
     [layers, onLayersChange],
   );
+  const updateAllFromCanvasState = useCallback(
+    (newCanvasState: CanvasState) => {
+      const {
+        openProject: newOpenProject,
+        selectedLayerIndex: newSelectedLayerIndex,
+      } = newCanvasState;
+
+      setSelectedLayerIndex(newSelectedLayerIndex || -1);
+
+      if (newOpenProject) {
+        onOpenProjectChange(newOpenProject);
+      }
+    },
+    [onOpenProjectChange],
+  );
 
   useEffect(() => clearTimeout(updateLayersTimerId.current), []);
+
+  useEffect(() => {
+    if (selectedTool && canvasRef.current) {
+      const { initializeCanvas } = selectedTool;
+
+      if (initializeCanvas) {
+        return initializeCanvas(
+          canvasRef.current,
+          canvasState,
+          updateAllFromCanvasState,
+        );
+      }
+    }
+  }, [selectedTool, canvasState, updateAllFromCanvasState]);
 
   return (
     <Layout className="Canvas">

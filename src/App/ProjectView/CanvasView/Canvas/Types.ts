@@ -21,6 +21,11 @@ export type CanvasTool = {
   id: string;
   label: string;
   icon: string;
+  initializeCanvas?: (
+    canvas: HTMLCanvasElement,
+    canvasState: CanvasState,
+    onCanvasStateChange: (canvasState: CanvasState) => void,
+  ) => (() => void) | undefined;
   onCanvasStateChange?: (
     canvasState: CanvasState,
     overlayCoordinates?: Coordinates,
