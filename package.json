@@ -5,7 +5,9 @@
   "author": "Ryanne Graff <ryantgraff@resistdesign.com>",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "parcel ./src/index.html"
+    "start": "parcel ./src/index.html",
+    "build": "yarn helper-types-text && parcel build",
+    "deploy": "yarn build && cp ./CNAME ./dist/CNAME"
   },
   "targets": {
     "app": {
