@@ -5,24 +5,14 @@
   "author": "Ryanne Graff <ryantgraff@resistdesign.com>",
   "license": "UNLICENSED",
   "scripts": {
-    "start": "parcel ./src/index.html",
+    "start": "parcel",
     "build": "parcel build",
     "deploy": "yarn build && cp ./CNAME ./dist/CNAME"
   },
   "targets": {
-    "app": {
-      "context": "browser",
-      "engines": {
-        "browsers": [
-          "last 2 version",
-          "not dead",
-          "> 0.2%"
-        ]
-      },
-      "includeNodeModules": true,
-      "outputFormat": "commonjs",
-      "isLibrary": false,
-      "scopeHoist": false
+    "default": {
+      "source": "src/index.html",
+      "distDir": "dist"
     }
   },
   "dependencies": {
