@@ -1,19 +1,25 @@
-## Image Editor Project
+# Image Editor
 
-Build a React + Typescript web app that allows users to import photos (either drag-n-drop or otherwise), crop, move, resize, and do something fun with them, e.g. apply a special "brush" or any other effect of your choosing.
+## Runtime Environment
 
-The app should somehow implement the concept of a stateful canvas (or "session"). I.e. the entire state of the interaction with a single canvas should be contained such that the user could switch back and forth between canvases.
+Chrome
 
-While **not** required for this execrise, plan for a future where we'd support features such as real-time collaboration, and saving / fetching state from a server.
+## UI
 
-## Areas of focus:
-- Program organization
-- Problem modeling
-- State management
-- Prep for future extensibility (while avoiding premature optimizations)
-- Minimal amount of 3rd party deps
+- Project View: The view of all projects and the current canvas.
+    - Project List: The list of all projects.
+    - Canvas View: The current canvas.
+        - Tool View: A selection of available tools.
+            - Move
+            - Resize
+            - Crop
+            - Mystery Tool (?) 😮
+        - Canvas: The actual canvas that represents the current image.
+            - Layers: Multiple layers.
+                - Layer: A matrix of pixel information including opacity.
 
-## Timeline
-Let's aim to wrap this part up by 11/27! :) 
+## State
 
-Scope suggestion: plan for net ~2-3 hours of development work
+- Projects: A list of all projects.
+- Open Project: The currently open project being edited.
+    - Modifications: A collection of patches applied to the open project since it was opened.
