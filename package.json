@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "scripts": {
     "start": "parcel ./src/index.html",
-    "build": "yarn helper-types-text && parcel build",
+    "build": "parcel build",
     "deploy": "yarn build && cp ./CNAME ./dist/CNAME"
   },
   "targets": {
